@@ -1,1 +1,2 @@
-Shell, I/O Redirections and filters
+the first readme for the project.
+
