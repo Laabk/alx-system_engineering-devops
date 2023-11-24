@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# a bash script that displays the to infinity and beyond
+
+i=0
+while (( i < 10 ))
+do
+     echo "To infinity and beyond"
+     sleep 2
+done
