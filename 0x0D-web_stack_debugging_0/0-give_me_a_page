@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#the page contain the string hello holberton
+sudo service apache2 start
