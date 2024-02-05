@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # duplicate web-01 to web-02
 
-echo -e "wait, updating with some minor checks...\n"
+#set -x
+
+echo -e "wait updating and doing some minor checks...\n"
 
 function install() {
 	command -v "$1" &> /dev/null
@@ -17,11 +19,11 @@ function install() {
 	fi
 }
 
-install nginx #install nginx
+install nginx #this install nginx
 
-echo -e "\nplease setting up some stuff.\n"
+echo -e "\npls setting up some minor stuff.\n"
 
-# just allowing nginx on chrome
+# allowing nginx on chrome
 sudo ufw allow 'Nginx HTTP'
 
 if [ -d "/var/www" ]; then
@@ -33,7 +35,7 @@ else
 	sudo chmod -R 755 /var/www
 fi
 
-# this  creates any directories if not present
+# create all neccessarydirectories
 for dir in /var/www/{html,error}; do
 	if ! [ -d "$dir" ]; then
 		mkdir -p "$dir"
@@ -42,8 +44,7 @@ done
 
 echo "Hello World!" > /var/www/html/index.html
 
-echo "the page can't be aceesed" > /var/www/html/error_404.html
-
+echo "Ceci n'est pas une page" > /var/www/html/error_404.html
 sudo cp /etc/nginx/sites-enabled/default nginx-sites-enabled_default.backup
 
 server_config=\
@@ -65,8 +66,7 @@ server_config=\
 			internal;
 		}
 }"
-
-echo "$server_configuring" | sudo dd status=none of=/etc/nginx/sites-enabled/default
+echo "$server_config" | sudo dd status=none of=/etc/nginx/sites-enabled/default
 
 if [ "$(pgrep -c nginx)" -le 0 ]; then
 	sudo service nginx start

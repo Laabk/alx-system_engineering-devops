@@ -2,7 +2,7 @@
 # install load balancer
 
 
-echo -e "wait updating with some checks...\n"
+echo -e "wait updating and doing some minor checks...\n"
 
 function install() {
 	command -v "$1" &> /dev/null
@@ -20,7 +20,7 @@ function install() {
 
 install haproxy #install haproxy
 
-echo -e "\nwait,setting up some stuff.\n"
+echo -e "\nwait setting up some minor stuff.\n"
 
 sudo cp /etc/haproxy/haproxy.cfg haproxy_default.backup
 
@@ -33,22 +33,21 @@ defaults
   timeout server 15s
   timeout http-request 10s
 
-frontend globallaab-tech-frontend
+frontend globallaabnow-tech-frontend
     bind *:80
-    default_backend globallaab-tech-backend
+    default_backend globallaabnow-tech-backend
 
-backend globallaab-tech-backend
+backend globallaabnow-tech-backend
     balance roundrobin
     server 422684-web-01 35.175.128.201:80 check
     server 422684-web-02 100.25.144.3:80 check
 "
 
-echo "$server_configuring" | sudo dd status=none of=/etc/haproxy/haproxy.cfg
+echo "$server_config" | sudo dd status=none of=/etc/haproxy/haproxy.cfg
 
-# enabling the haproxy
 echo "ENABLED=1" | sudo dd status=none of=/etc/default/haproxy
 
-echo "is configured - Roundrobin On web-01 & web-02"
+echo "configured - Roundrobin On web-01 & web-02"
 
 if [ "$(pgrep -c haproxy)" -le 0 ]; then
 	sudo service haproxy start
