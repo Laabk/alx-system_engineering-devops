@@ -5,7 +5,7 @@ import json
 import requests as req
 
 
-def count_words(subreddit, word_list, after="", count=[]):
+def count_words(subreddit, word_list, after="", counts=[]):
     """count all wnd adds words" in the list"""
 
     if after == "":
