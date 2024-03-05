@@ -23,7 +23,7 @@ def count_words(subreddit, word_list, after="", count=[]):
         for contnt in (data['data']['children']):
             for a_word in contnt['data']['title'].split():
                 for d in range(len(word_list)):
-                    if word_list[d].lower() == word.lower():
+                    if word_list[d].lower() == a_word.lower():
                         counts[d] += 1
 
         after = data['data']['after']
