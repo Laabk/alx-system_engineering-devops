@@ -2,25 +2,24 @@
 """this queries the Reddit API and returns
 the number of subscribers for a given subreddit.
 """
-import requests as req
-import sys
+
+from requests import get
 
 
 def number_of_subscribers(subreddit):
-    """ Queries to Reddit API """
-    usr_agent = 'Google Chrome Version 81.0.4044.129'
+    """ this is the Queries to Reddit API
+    """
 
-    headers = {
-        'User-Agent': usr_agent
-    }
+    if subreddit is None or not isinstance(subreddit, str):
+        return 0
 
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    resp = req.get(url, headers=headers, allow_redirects=False)
-    if resp.status_code != 200:
+    usr_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
+    resp = get(url, headers=usr_agent)
+    res = resp.json()
+
+    try:
+        return res.get('data').get('subscribers')
+
+    except Exception:
         return 0
-    dicti = resp.json()
-    if 'data' not in dicti:
-        return 0
-    if 'subscribers' not in dicti.get('data'):
-        return 0
-    return resp.json()['data']['subscribers']

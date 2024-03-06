@@ -1,33 +1,30 @@
 #!/usr/bin/python3
-"""queries the Reddit API and prints
-the top ten hot posts of a subreddit"""
+"""the queries the Reddit API and prints
+the top ten hot posts of a subreddit
+"""
 
-import requests as req
-import sys
+from requests import get
 
 
 def top_ten(subreddit):
-    """ Queries to Reddit API involved"""
-    usr_agent = 'Google Chrome Version 81.0.4044.129'
+    """ this is the queries to Reddit API
+    """
 
-    headers = {
-        'User-Agent': usr_agent
-    }
+    if subreddit is None or not isinstance(subreddit, str):
+        print("None")
 
-    params = {
-        'limit': 10
-    }
+    usr_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
+    params = {'limit': 10}
+    url = 'https://www.reddit.com/r/{}/hot/.json'.format(subreddit)
 
-    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
-    resp = req.get(url, headers=headers, params=params,
-            allow_redirects=False)
-    if resp.status_code != 200:
-        print(None)
-        return
-    dicti = resp.json()
-    h_posts = dicti['data']['children']
-    if len(h_posts) is 0:
-        print(None)
-    else:
-        for pos in h_posts:
-            print(pos['data'][
+    resp = get(url, headers=usr_agent, params=params)
+    res = resp.json()
+
+    try:
+        data = res.get('data').get('children')
+
+        for d in data:
+            print(d.get('data').get('title'))
+
+    except Exception:
+        print("None")

@@ -5,9 +5,8 @@ the top ten hot posts of a subreddit"""
 import requests as req
 after = None
 
-
 def recurse(subreddit, hot_list=[]):
-    """returning top ten post titles recursively"""
+    """returs top ten post titles recursively"""
     global after
     user_agent = {'User-Agent': 'api_advanced-project'}
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
