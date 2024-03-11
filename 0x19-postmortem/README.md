@@ -3,6 +3,7 @@ Impact:
 
 
 
+alx 
 
 Affected Service: The entire application built on PHP 7 faced a shutdown.
 User Impact: Users encountered difficulties accessing their accounts and sending requests.
